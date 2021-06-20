@@ -1,7 +1,7 @@
-﻿<Application x:Class="FileHasher.App"
+﻿<Application x:Class="fileHasher.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             StartupUri="FileHasher.xaml">
     <Application.Resources>
     </Application.Resources>
 </Application>

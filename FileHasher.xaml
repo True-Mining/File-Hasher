@@ -1,0 +1,29 @@
+﻿<Window x:Class="FileHasher.FileHasher"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="File hash checksum" Height="450" Width="900"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Grid>
+        <DockPanel Margin="10">
+            <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,10">
+                <Button Click="BtnGetDirectory_Click" Width="195" Height="46">Select directories to checksum files</Button>
+                <WrapPanel Orientation="Vertical">
+                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                        <CheckBox Content="Base Directory" Margin="5,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding StartPathCkecked}" />
+                        <TextBox x:Name="TextStartPath" Margin="5,0,0,0" TextWrapping="Wrap" Width="400" VerticalContentAlignment="Center" VerticalAlignment="Center" Text="{Binding StartPath}" IsEnabled="{Binding StartPathCkecked}" />
+                        <Button Click="BtnGetStartDirectory_Click" Margin="5,0,0,0" Width="90" Height="20" Content="Select directory" IsEnabled="{Binding StartPathCkecked}" />
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"  Margin="5">
+                        <CheckBox Content="Base Download Link" Margin="5,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding StartDlLinkCkecked}" />
+                        <TextBox x:Name="TextStartDlLink" Margin="5,0,0,0" TextWrapping="Wrap" Width="465" VerticalContentAlignment="Center" VerticalAlignment="Center" Text="{Binding StartDlLink}" IsEnabled="{Binding StartDlLinkCkecked}" />
+                    </WrapPanel>
+                </WrapPanel>
+            </WrapPanel>
+            <TextBox Name="TextBoxResult" Text="{Binding StringResult}" VerticalScrollBarVisibility="Auto" />
+        </DockPanel>
+    </Grid>
+</Window>

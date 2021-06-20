@@ -11,6 +11,7 @@
 		<Optimization>true</Optimization>
 		<Obfuscate>true</Obfuscate>
 		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+		<AssemblyName>FileHasher</AssemblyName>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
