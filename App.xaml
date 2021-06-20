@@ -1,9 +1,7 @@
-﻿<Application x:Class="get_files_hash_checksum.App"
+﻿<Application x:Class="FileHasher.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:get_files_hash_checksum"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>
