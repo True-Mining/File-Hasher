@@ -10,7 +10,6 @@
 		<Configuration>Release</Configuration>
 		<Optimization>true</Optimization>
 		<Obfuscate>true</Obfuscate>
-		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 		<AssemblyName>FileHasher</AssemblyName>
 	</PropertyGroup>
 
