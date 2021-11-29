@@ -43,13 +43,13 @@ namespace FileHasher
             {
                 if (File.Exists(filePath))
                 {
-                    ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePath) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePath), false).AbsoluteUri : null, FileName = Path.GetFileName(filePath), Path = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/") : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/") : null, Sha256 = File.Exists(filePath) ? FileSHA256(filePath) : null }); ;
+                    ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePath) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePath), false).AbsoluteUri : null, FileName = Path.GetFileName(filePath), Path = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null, Sha256 = File.Exists(filePath) ? FileSHA256(filePath) : null }); ;
                 }
                 else if (Directory.Exists(filePath))
                 {
                     foreach (string filePathInSubdir in Directory.GetFiles(filePath, "*", SearchOption.AllDirectories))
                     {
-                        ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePathInSubdir) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePathInSubdir), false).AbsoluteUri : null, FileName = Path.GetFileName(filePathInSubdir), Path = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/") : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/") : null, Sha256 = File.Exists(filePathInSubdir) ? FileSHA256(filePathInSubdir) : null }); ;
+                        ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePathInSubdir) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePathInSubdir), false).AbsoluteUri : null, FileName = Path.GetFileName(filePathInSubdir), Path = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null, Sha256 = File.Exists(filePathInSubdir) ? FileSHA256(filePathInSubdir) : null }); ;
                     }
                 }
             }
@@ -119,6 +119,16 @@ namespace FileHasher
             Config.StartPath = Directory.Exists(cfd.FileName) ? cfd.FileName : Path.GetDirectoryName(cfd.FileName);
 
             GuiUpdater();
+        }
+    }
+    public static class Tools
+    {
+        public static string TrimStringAtEnd(this string source, string value)
+        {
+            if (!source.EndsWith(value))
+                return source;
+
+            return source.Remove(source.LastIndexOf(value));
         }
     }
 }
