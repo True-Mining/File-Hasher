@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace FileHasher
@@ -53,6 +54,9 @@ namespace FileHasher
                     }
                 }
             }
+
+            ListOfFiles = ListOfFiles.OrderBy(x => x.FileName).ToList();
+            ListOfFiles = ListOfFiles.OrderBy(x => x.Path).ToList();
 
             if (ListOfFiles.Count == 0) { Config.StringResult = "No files in selected directories"; }
             else
