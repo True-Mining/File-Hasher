@@ -44,19 +44,19 @@ namespace FileHasher
             {
                 if (File.Exists(filePath))
                 {
-                    ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePath) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePath), false).AbsoluteUri : null, FileName = Path.GetFileName(filePath), Path = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null, Sha256 = File.Exists(filePath) ? FileSHA256(filePath) : null }); ;
+                    ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePath) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePath), false).AbsoluteUri : null, FileName = Path.GetFileName(filePath), Directory = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePath)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null, Sha256 = File.Exists(filePath) ? FileSHA256(filePath) : null }); ;
                 }
                 else if (Directory.Exists(filePath))
                 {
                     foreach (string filePathInSubdir in Directory.GetFiles(filePath, "*", SearchOption.AllDirectories))
                     {
-                        ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePathInSubdir) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePathInSubdir), false).AbsoluteUri : null, FileName = Path.GetFileName(filePathInSubdir), Path = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null, Sha256 = File.Exists(filePathInSubdir) ? FileSHA256(filePathInSubdir) : null }); ;
+                        ListOfFiles.Add(new FileParameters() { DlLink = Config.StartDlLinkCkecked && Uri.IsWellFormedUriString(Config.StartDlLink, UriKind.Absolute) && File.Exists(filePathInSubdir) && Config.StartPathCkecked && Directory.Exists(Config.StartPath) ? new Uri(new Uri(Config.StartDlLink, UriKind.Absolute), Path.GetRelativePath(Config.StartPath + '/', filePathInSubdir), false).AbsoluteUri : null, FileName = Path.GetFileName(filePathInSubdir), Directory = Config.StartPathCkecked ? Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetRelativePath(Config.StartPath, filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null : Directory.Exists(Config.StartPath) ? Path.GetDirectoryName(Path.GetFullPath(filePathInSubdir)).Replace(@"//", @"/").Replace(@"\\", @"\").Replace(@"\", @"/").TrimStringAtEnd(Path.GetFileName(filePath)) : null, Sha256 = File.Exists(filePathInSubdir) ? FileSHA256(filePathInSubdir) : null }); ;
                     }
                 }
             }
 
             ListOfFiles = ListOfFiles.OrderBy(x => x.FileName).ToList();
-            ListOfFiles = ListOfFiles.OrderBy(x => x.Path).ToList();
+            ListOfFiles = ListOfFiles.OrderBy(x => x.Directory).ToList();
 
             if (ListOfFiles.Count == 0) { Config.StringResult = "No files in selected directories"; }
             else
@@ -83,8 +83,8 @@ namespace FileHasher
             [JsonProperty("dlLink", NullValueHandling = NullValueHandling.Ignore)]
             public string DlLink { get; set; }
 
-            [JsonProperty("path", NullValueHandling = NullValueHandling.Ignore)]
-            public string Path { get; set; }
+            [JsonProperty("directory", NullValueHandling = NullValueHandling.Ignore)]
+            public string Directory { get; set; }
 
             [JsonProperty("fileName", NullValueHandling = NullValueHandling.Ignore)]
             public string FileName { get; set; }
